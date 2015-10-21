@@ -40,7 +40,7 @@ Dependency - relationship between two distinct entities where one can not perfor
 				depends on => Domain: IUserRepository (getting user) + UserRepository implementation =>
 					depends on => NHibrernate
 
-	Solution: Stairway Pattern - split Interfaces and it's contrete implementation in seperate assemblies
+	Solution to Entourage anti-pattern: Stairway Pattern - split Interfaces and it's contrete implementation in seperate assemblies
 		- Interfaces should NOT have external dependencies
 		- by putting interfaces and their implementations in seperate assemblies, you can vary the two independently and clients only
 			need to make a single reference - to the Interface
@@ -53,6 +53,39 @@ Dependency - relationship between two distinct entities where one can not perfor
 
 	NuGET - creating own packages
 	Chocolatey - package management tool, like NuGet but its packages are applications and tools, not assemblies
+
+
+4. Layering
+
+	Layers - logical organization
+	Layers vs. Tiers - logical seperation vs. physical deployment (ie. 4 layers but phisically on 2 tiers (on db server + ui/business logic server))
+	
+	1. Two layers - two logical groups of assemblies. [UI + Data access Interfaces] AND [Data access Implementations]
+	2. Three layers - [UI] + [Business logic] + [Data access]
+		Business logic - model the business domain to capture business processes, rules, and workflow
+		* DDD - Use mapping to map objects between Domain (business logic) and ORM (ex. Entity framework) - this way Data Access no knowledge of business logic
+			- Domain model assemblies have no dependency on Data access ORM
+			- ORM could be easily replaced since Domain classes are NOT the same as ORM classes but only mapped
+			- UI => Domain model => Object Relational Mapping => Data Access (ORM)
+
+5. CQRM - Command query responsibility segregation - Asymetric layering
+	- Path for data access (saving and reading) not always the same. Reading should be quick, while saving could have other bussiness logic, events etc.
+	- Domain model handles commands, while quieries are directly hitting Data Access layer
+	UI => Command => Logic => Data Access
+	UI => Query => Data Access -> return data
+
+	1. Commands - change state, do NOT return value
+	2. Queries - requests for data, return data
+
+
+5. Cross Cutting Concerns - Aspects / Attributes
+	
+	- shared functionality: logging, auditing, security - where does it go?
+	Solution: AOP - Aspect oriented programming using Attributes [Log] or [Transactional] etc. - much cleaner
+
+
+
+
 
 
 			

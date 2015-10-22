@@ -16,8 +16,7 @@ Board - Everyone is there to see it. May be able to make suggestions, ask questi
 
 
 2. Dependencies
-
-Dependency - relationship between two distinct entities where one can not perform without the other
+	Dependency - relationship between two distinct entities where one can not perform without the other
 	1. First party - in the same code base (project/solution)
 	2. Third party - external assembly
 	3. Ubiquitous - .net framework
@@ -79,15 +78,73 @@ Dependency - relationship between two distinct entities where one can not perfor
 
 
 5. Cross Cutting Concerns - Aspects / Attributes
-	
 	- shared functionality: logging, auditing, security - where does it go?
 	Solution: AOP - Aspect oriented programming using Attributes [Log] or [Transactional] etc. - much cleaner
 
 
+6. Interfaces and Design Patterns
+	- Polymorphism - client code can interact with an object as if it was one type when it is actually another type
+		IVehicle (StartEngine, StopEngine, Steer)
+			a. Car
+			b. Motorcycle
+			c. Speedboat
+		
+	- defines the behavior that a class HAS, but not HOW this behavior is implemented
+	- interfaces require a class to provide the working code to fulfill the interface
+	- explicit vs implicit implementation (explicit: you define interface name)
+
+  Extending Interfaces:
+        1. dynamic keyword
+        2. Impromptu NuGet library
+        3. Mixins Re-mix, Re-motion
+        4. Extension methods
+
+	1. Adapter pattern - allows you to provide an object instance to client that has a dependency on an interface that your instance does not implement
+		Adapter - implements expected Interface. Accepts Adaptee class or Adaptee class is defined inside adapter. Then calls Adaptee class
+	2. Strategy pattern
+
+	Duck Typing - Swan is a duck? => void Walk(), void Swim(), void Quack() 
+
+	* How to treat an object as IF it was implementing an interface withOUT actually implementing an interface
+
+	1. Using Dynamic Language Runtime (dynamic keyword)
+		- having an Interface IDuck that is NOT implemented by Swan class. But the class MUST contain the method signature you're trying to run
+		dynamic - dynamic variable can have any type. Its type can change during runtime. Performance issues/slow
+			- acts like a placeholder for a type not know Until Runtime
+			- don't use it. However only use it when reflection is needed
+
+		dynamic a = 1;
+		Console.WriteLine(a);
+
+		// Dynamic now has a different type.
+		a = new string[0];
+
+	2. Impromtu Interface - ActLike<T> - pass in class (Swan) and receive Interface (IDuck) instance
+		- must download NuGet package
+
+			var swan = new Swan();
+			var swanAsDuck = Impromtu.ActLike<IDuck>(swan);
+			if (swanAsDuck != null)
+			{
+				swanAsDuck.Walk();
+				...
+			}
+
+	3. Mixins
+		- NuGet: Re-motion and Re-mix
+		- allow for a class to act as if implements methods/properties from several different interfaces even though it actually doesn't implement any
+
+	4. Extension Methods - allow for extending Interfaces, adding new functionality to already existing types without needing to access the source type
+		
+		public static class MyExtensions {
+			public static void FurtherInterfaceMethodA(this IMyInterface target, int extraParameter)
+			{
+				...
 
 
+7. Unit Testing
+	- process of writing code that tests other code
+	- Act, Arrange, Assert
 
-
-			
-
-
+8. Refactoring
+	- process of incrementally improving the design of existing code

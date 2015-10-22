@@ -23,7 +23,7 @@ Board - Everyone is there to see it. May be able to make suggestions, ask questi
 
 	- To keep code adaptive to change you must manage dependencies effectively.
 	- assemblies are loaded at run time by CLR. So, even though you add reference, if that assembly is not used it will not generate error/or be loaded
-	- using keywork - in a class, gets omitted if that assembly is NOT used
+	- using keywork - in a class, gets omitted if that assembly is NOT used, only for sugar coding code/easier to read
 
 
 3. Managing Dependencies

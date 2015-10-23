@@ -145,6 +145,13 @@ Board - Everyone is there to see it. May be able to make suggestions, ask questi
 7. Unit Testing
 	- process of writing code that tests other code
 	- Act, Arrange, Assert
+	- MOQ - framework for setting up mocks
+		a. When set up an mocked object's properties are set to defaults (int = 0, bool = false, string = null etc)
+		b. Mock .Object is an interface
+		c. Set up .Object how it should behave when a method is called
+		d. Prefix all mocked objects with 'mock' keyword for consistency
+
+	[TestInitilize] - ran before Each test
 
 8. Refactoring
 	- process of incrementally improving the design of existing code

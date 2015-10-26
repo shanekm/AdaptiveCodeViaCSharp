@@ -155,3 +155,47 @@ Board - Everyone is there to see it. May be able to make suggestions, ask questi
 
 8. Refactoring
 	- process of incrementally improving the design of existing code
+	AbstractBase class AccountService 
+		a. SilverAccount
+		b. GoldAccount
+		c. PlatinumAccoutn - each having CalculateRewardPoints() method
+
+	// Refactoring - implemented by Silver, Gold, Platinum, Standard accounts have no reward points
+	// Interface can be implemented by classes that have RewardPoints
+	interface IRewardCard
+	{
+		int RewardPoints { get; }
+	}
+	void CalculateRewardPoints(decimal amount, decimal accountBalance); 
+
+
+PART II - SOLID PRINCIPLES
+
+1. Single Responsibility Principle (SRP)
+	- write code that has one and only one reason to change. If a class has more than one reason to change, it has more
+		than one responsibility
+	- classes with more than single responsibility should be broken up
+	"Big ball of mud" - class or group of classes that is mixed up with different responsabilities
+	- refactor for Adoptability and NOT for readability
+
+	TradeProcessor class
+		- reads stream, parsing, validating, logging - all in one class
+
+		After Refactoring:
+			a. Stream can be easily replaced by other service (ie. web service) => new ITradeDataProvider (feeds service)
+			b. Validation rules can change => ITradeValidator, any implementation can be chanced, added easily
+			c. Logging erros => ILogger
+			d. Db implementation / storage can be easily changed - ITradeStorage
+
+	Extending SRP:
+		Decorator Patterns - ensures that each class has a single responsibility. Functionailty can be added to
+			an existing class that implements certain Interface.
+
+			ConcreteComponent.Something() : IComponent 
+			DecoratorComponent.Something() : IComponent => Constructor(ConcreteComponent)
+				Something( 
+					// do other work
+					// do concreteComponent work: Something();
+				)
+
+

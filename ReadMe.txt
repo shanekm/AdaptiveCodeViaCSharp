@@ -178,7 +178,7 @@ PART II - SOLID PRINCIPLES
 	"Big ball of mud" - class or group of classes that is mixed up with different responsabilities
 	- refactor for Adoptability and NOT for readability
 
-	TradeProcessor class
+	TradeProcessor() class
 		- reads stream, parsing, validating, logging - all in one class
 
 		After Refactoring:
@@ -190,6 +190,7 @@ PART II - SOLID PRINCIPLES
 	Extending SRP:
 		Decorator Patterns - ensures that each class has a single responsibility. Functionailty can be added to
 			an existing class that implements certain Interface.
+			- Attach additional responsibilities to an object dynamically
 
 			ConcreteComponent.Something() : IComponent 
 			DecoratorComponent.Something() : IComponent => Constructor(ConcreteComponent)

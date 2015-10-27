@@ -198,5 +198,72 @@ PART II - SOLID PRINCIPLES
 					// do other work
 					// do concreteComponent work: Something();
 				)
+			
+			1. Predicate Decorators:
+				- Useful for hiding conditional execution of code from clients (ie. hiding DateTeste class functionality)
+				- ex. DateTester is executed in predicateDecorator although hidden from Program/client. only Run() method visible in client
 
+				public class DateTested {
+					public bool PerformTest get { // some logic, calculation }
+
+				// Decorator pattern as before
+				public PredicateDecorator(IComponent component){
+					public void Run()
+					{
+						DateTester dateTester = new DateTester()
+						if (dateTester.PerformTest) // Client is not are of dateTester PredicateDecorator class has only Run() public method
+						... 
+					}
+				}
+
+			2. Branching Decorators
+				- useful to execute something on the false or true branch IComponent, based on condition
+
+				public class BranchedComponent : IComponent
+				{
+					public BranchedComponent(IComponent trueComponent, IComponent falseComponent, IPredicate){
+						// set private fields
+					}
+
+					public void DoSomething(){
+						if (true)
+							trueComponent.Something(); // implementation of True
+						else
+							falseComponent.Something(); // implementation of False
+					}
+				}
+
+			3. Lazy Decorators
+				- allows clients to be provided with a reference to an interface that will not be instaniated until its first use
+				- Lazy<T>
+
+			4. Profiling Decorators
+				- stopwatch = new StopWatch
+
+				public class SlowComponent : IComponent{
+					public SlowComponent {
+						// init stopwatch
+						stopwatch = new Stopwatch();
+					}
+
+					public DoSomething(){
+						stopwatch.Start();
+						...
+						stopwatch.Stop();
+						stopwatch.ElapsedMilliseconds / 1000 // seconds
+					}
+				}
+
+			5. Asynchronous Decorators
+				- run on different thread than the client
+				- allows to send in synch component and send it further in async manner using decorator
+				-  only fire and forget. Methods that have NO return value
+
+		b. Composite
+			- to alow you to treat many instances of an interface as if they were just one instance
+			- add an RemoveComponent methods are NOT part of IComponent interface. Leaf class still adheres to SRP
+			- more functionailty can be added to ALL implementation of IComponent without changing the implementing concrete types
+				otherwise clients of IComponent would have to change.
+			- compose objects into tree structures to represent part-whole hierarchies
+			- composite lets clients treat individual objects and compositions of objects uniformly.
 

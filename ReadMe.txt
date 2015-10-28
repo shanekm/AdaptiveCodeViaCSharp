@@ -267,3 +267,35 @@ PART II - SOLID PRINCIPLES
 			- compose objects into tree structures to represent part-whole hierarchies
 			- composite lets clients treat individual objects and compositions of objects uniformly.
 
+2. Open/Closed Principle - OCP
+	- open for extension, closed for modification
+	- should be open to extension by containing defined extension points where future functionality can hook into the existing code 
+		and provide new behaviours
+
+	Code without extension points:
+		TradeProcessorClient => uses TradeProcessor - ProcessTrades(): TradeProcessorClient directly depends on TradeProcessor class
+			- when new functionality is needed both classes will have to be modified
+
+	Ways to allow for extension:
+		a. Virtual methods
+		b. Abstract methods
+		c. Interface inheritance
+
+	A. Virtual Methods
+		TradeProcessorClient => uses TradeProcessor - ProcessTrades(): virtual => new version TradeProcessor2 - ProcessTrades: override
+			- any class that marks one of its members as virtual is open to extension (via inheritance)
+			- TradeProcessorClient does not need to change and you can supply client with new version of TradeProcessor(2)
+			- Only Methods can be Virtual, class doesn't have to be abstract
+		
+	B. Abstract Methods
+		- more flexible than virtual methods
+		- client may only be aware of Base class and not implementation
+		TradeProcessorClient => uses TradeProcessorAbstract => can use either implementation 
+		- many versions of the TradeProcessor are provided both inherit ProcessTrades() with their own implementation
+		- client ONLY depends on abstract Base class, so either concrete subclass or new subclass could be provided
+
+	C. Interface Inheritance
+		- best, most flexible
+		- client's dependency on a class is replaced with delegation to an interface
+		- many classes have concrete implementation of the interface
+		TradeProcessorClient => uses ITradeProcessor => implemented by many ProcessTrades()

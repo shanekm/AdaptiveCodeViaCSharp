@@ -299,3 +299,11 @@ PART II - SOLID PRINCIPLES
 		- client's dependency on a class is replaced with delegation to an interface
 		- many classes have concrete implementation of the interface
 		TradeProcessorClient => uses ITradeProcessor => implemented by many ProcessTrades()
+
+3. Liskov Substitution Principle (LSP)
+	- collection of guidelines for creating inheritance hierarchies in which a client can reliably use any class 
+		or subclass without compromising the expected behavior.
+	- if LSP is NOT followed, the new subclass might force changes to client, base class or interface
+	- as long as there are no changes to the interface there should be no reason to change any existing code
+
+	

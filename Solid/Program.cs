@@ -45,7 +45,6 @@ namespace Solid
             // Error - can not return overriten entity with user
             //user = userRepository.GetById(Guid.NewGuid());
 
-
             // Covariance - able to return variant T (Subclass or Superclass)
             IEntityRepositoryCovariance<User> entityRepositoryCovariance = new UserRepositoryCovariance();
             user = entityRepositoryCovariance.GetById(Guid.NewGuid());
@@ -53,13 +52,15 @@ namespace Solid
             // Able to get entity as well
             entity = entityRepositoryCovariance.GetById(Guid.NewGuid());
 
-            // Covariance - able to get more broader type - Entity
+            // Covariance - able to get more broader type - Entity - Able to process both
             IEntityRepositoryCovariance<User> entityRepositoryCovarianceT = new UserRepositoryCovarianceT<User>();
             entity = entityRepositoryCovarianceT.GetById(Guid.NewGuid());
+            user = entityRepositoryCovarianceT.GetById(Guid.NewGuid());
 
-            // Contravariance - able to accept more specific type - User
+            // Contravariance - able to accept more specific type - User - Able to process both
             IEntityRepositoryContravariance<Entity> entityRepositoryContravarianceUser = new UserRepositoryContravariance<Entity>();
             entityRepositoryContravarianceUser.Add(new User());
+            entityRepositoryContravarianceUser.Add(new Entity());
         }
     }
 }

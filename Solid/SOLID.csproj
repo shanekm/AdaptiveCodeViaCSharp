@@ -41,16 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\ShippingStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TradeProcessor\ITradeProcessor.cs" />
     <Compile Include="TradeProcessor\TradeProcessor.cs" />
     <Compile Include="TradeProcessor\TradeProcessorClient.cs" />
     <Compile Include="TradeProcessor\TradeProcessorConcrete.cs" />
+    <Compile Include="Variance\Entity.cs" />
+    <Compile Include="Variance\EntityRepository.cs" />
+    <Compile Include="Variance\ICovariant.cs" />
+    <Compile Include="Variance\IEntityRepositoryVariance.cs" />
+    <Compile Include="Variance\User.cs" />
+    <Compile Include="Variance\UserRepository.cs" />
+    <Compile Include="Variance\UserRepositoryVariance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

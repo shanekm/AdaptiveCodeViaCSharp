@@ -306,4 +306,63 @@ PART II - SOLID PRINCIPLES
 	- if LSP is NOT followed, the new subclass might force changes to client, base class or interface
 	- as long as there are no changes to the interface there should be no reason to change any existing code
 
+	A. Contracts (Guard Clauses) - program to contracts, conditions necessary for a method to run reliably and without fault
+		- preconditions cannot be strengthened in a subtype - switch between supertype/subtype would be different (LSP would fail)
+		- postconditions cannot be weakened in a subtype - switch between supertype/subtype would be different (LSP would fail)
+		- invariants of the supertype must be preserved in a subtype - must be maintained otherwise (LSP would fail)
+		
+		a. Preconditions - check parameters coming IN to the class method
+
+			public decimal CalculateShippingCost(float weight){
+				if (weight <= 0) // Precondition
+					throw new ArgumentOutOfRangeException("weight", "package weight must be positive non-zero")
+			}
 	
+		b. Postconditions - check parameters coming OUT the class method, checks wheter an object is being left in a valid state on exit
+			- placed at the end of method alfter all edits to state have been made
+
+			public decimal CalculateShippingCost(float weight){
+				if (weight <= 0)
+					throw new ArgumentOutOfRangeException("weight", "package weight must be positive non-zero")
+
+				...
+				// Postcondition
+				if (shippingCost <= decimal.Zero)
+					throw new ArgumentOutOfRangeException("weight", "return value is out of range")
+
+				return shippingCost
+			}
+
+		c. Data Invariants - predicate that remain true for the lifetime of an object
+			- true after construction and must remain true until the object is out of scope
+
+			public class ShippingStrategy{
+				
+				protected decimal rate; // protected - only settable in constructor
+				// if it were public it would be settable outside of ShippingStrategy class - WRONG!
+
+				publi ShippingStrategy(decimal rate){
+					if (rate <= decimal.One)
+						throw new ArgumentOutOfRangeException("rate", "Flate rate must be positive greater than 0")
+				}
+			}
+
+
+	B. Code Contracts
+		System.Diagnostics.Contracts - .net attribute classes that allow for pre/post/data invariant checks
+		- set in Visual Studio => Code Contracts
+
+			Contract.Requires<ArgumentOutOfRangeException>(weight > 0, "Package weight must be greater than 0"); // Precondition
+			Contract.Ensures(Contract.Result<decimal>() > 0) // 
+			Contract.Invariant(flatRate > 0m, "Flat rate must be positive and non-zero"); // Invariant
+
+	C. Convariance and Contravariance - refers to Generic parameters
+		variance - a term applied to the expected behaviour of subtypes in a class hierarchy containing complex types
+		invariance - NOT able to be base/child flexible (IDictionary<Child, Parent> != IDictionary<Parent, Child>)
+
+		a. Covariance - Return T (out)
+			- accepts Supertype/Base, will also accept Subtype/Child without any casting (no Casting!) and Returns Both
+			Supertype/Base (field1, field2, Method1()) => Subtype/Child (field1, field2, new field3, Method1(), new Method2())
+
+		b. Contravariance - Accepts T (in) parameter
+			- accepts Subtype/Child in place of Supertype/Base

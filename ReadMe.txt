@@ -366,3 +366,51 @@ PART II - SOLID PRINCIPLES
 
 		b. Contravariance - Accepts T (in) parameter
 			- accepts Subtype/Child in place of Supertype/Base
+
+4. Interface Segregation Principle (ISP) => see Interfaces Solution 
+	IMPORTANT - only reason to split interfaces is to extend it/ or decorate it (using docorator pattern)
+	- no client consuming an interface should be forced to depend on methods it does not use
+	- later when you for each you will have to check if (entity is ISavable) it will throw an error as you're expecting all concrete types
+		 to have implementation of all members of interface
+	- if new property or method is added you need to modify all concrete classes/implementations (some may not need all the functionality)
+
+    public interface ISavable
+    {
+        void Save();
+    }
+
+	You need to add loging:
+		Problems: 
+			- mismatch because some users of this interface don't need loging, you would have to modify all implementations
+			- will throw an error when enumerating ISavable in a list etc
+			- functionality that some clients use, others don't should not be accessible (encapsulation)
+
+	Better to add new interface
+
+	public interface IExtendedSavable : ISavable
+    {
+        void Log(string message);
+    }
+
+	- Now classes that already implemented ISavable still work because no properties/methods were added, and only new class implements extension
+	- Both implementations can be used for processing, example send in to a method (Base method is accepted)
+
+	AnotherClass anotherClass = new AnotherClass();
+	anotherClass.Save("Extended save!");
+	anotherClass.Save(); // ISavable save called
+	SendInInterface(anotherClass); 
+
+	ISavable s1 = new SomeClass(); // s1 class has NO access to Log() method - good 
+    SendInInterface(s1); // This also works
+
+	public static void SendInInterface(ISavable savable)
+    {
+        if (savable is ISavable)
+        {
+            // do stuff
+        }
+    }
+
+	Example 3
+		Reading/Writing - two users use interfaces however reading class does NOT need to know about writing implementation
+

@@ -541,7 +541,7 @@ PART II - SOLID PRINCIPLES
 
 	D. Convention over Confituration
 		- instead of using Container.RegisterType or XML use convention
-		- weakly typed
+		- weakly typed (if error or no match found only error thrown at run time, whereas strongly typed using class error during compilation)
 
 		Container.RegisterTypes(
 			AllClasses.FromAssembliesInBasePath(), // bin folder

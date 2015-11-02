@@ -414,3 +414,137 @@ PART II - SOLID PRINCIPLES
 	Example 3
 		Reading/Writing - two users use interfaces however reading class does NOT need to know about writing implementation
 
+5. Dependency Injection
+	Class should be Proxiable - alternative version/implementation (known as proxy) can be supplier to the client (ie. virtual methods etc)
+
+	a. Method injection 
+		- injected instance is used for the lifetime of the client
+		var taskService = taskService.GetAllTasks(settings); // injecting via method
+	b. Property injection
+		- benefit is that instance can be changed at run time on the client
+		var taskService.Service = settings;
+	
+	IoC Container - holds mappings between interfaces and concrete types. Types are mapped to interfaces
+	Register => Resolve => Release pattern
+
+	public interface IContainer : IDisposable
+	{
+		void Register<TInterface, TImplementation>() where TImplementation : TInterface;
+		TImplementation Resolve<TInterface>();
+		void Release();
+	}
+
+	A. Object Lifetime
+		- how do you control object lifetime (ex. SqlConnection used in TaskService?)
+		- if SqlConnection was injected into TaskService it would life for the lifetime of the application
+
+		ex1: Implementing IDisposable
+		- no concrete class implements ITaskService and IDisposable
+		- When using Constructor Injection, class being passed in should not manually dispose of the dependency itself
+
+		// Connection will be disposed when TaskService is disposed
+		public class TaskService: ITaskService, IDisposable{
+			public TaskService(IDbConnection connection){
+				this.connection = connection;
+			}
+
+			... // rest of code
+		}
+
+		ex2. Connection Factory
+		- replace manual object instantiation with delegation to ta class whose purpose is to create objects
+
+		// Injected into TaskService so that you can retrieve connection without manually constructinig it
+		// keeping the service testable through mocking
+		public interface IConnectionFactory{
+			// IDbConnection implements IDisposable
+			IDbConnection CreateConnection();
+		}
+
+		public class TaskService: ITaskService, IDisposable{
+			private readonly IConnectionFactory connectionFactory
+			public TaskService(IConnectionFactory connectionFactory){
+				this.connectionFactory = connectionFactory;
+			}
+
+			using (var connection = connectionFactory.CreateConnection()){ // connection will be disposed by using{} block end
+				connection.Open;
+				...
+			}
+		}
+
+		ex3. Responsible Owner Pattern
+		- in case class does not implement IDisposable
+		try {
+			 connection.Open();
+			 ...
+			 // read/while from db
+		} finally {
+			if (connection is IDisposable)
+			{
+				var disposableConnection = connection as IDisposable;
+				disposableConnection.Dispose();
+			}
+		}
+
+		return allTasks;
+
+		ex4. Factory Isolation Pattern
+		- only required when target interface does not implement IDisposable
+		- factory isolation pattern replaces the common Create() method which returns an instance of a class, instead providing With() method
+			which accepts lambda method that has the factory product as a parameter
+		- advantage here is that the lifetime of the factory product is explicitly linked to the lambda method scope (lambda ends = instance of class ends as well)
+
+		public class IsolationConnectionFactory : IConnectionIsolationFactory {
+			public void With(Action<IDbConnection do){
+				using (var connecion = CreateConnection()){
+					do(connection);
+				}
+			}
+		}
+
+		public IEnumerable<TaskDto> GetAllTasks(){
+			// Usage
+			connectionFactory.With(connection => {
+				connection.Open();
+				// get data/while read etc
+			})
+		}
+
+	B. Service Locator Anti-Pattern
+		- incorrectly creates types in default() /empty constructor (bad!)
+		- no DI, "don't call us, we'll call you" pattern broken
+		- have to search the code what is being constructed instead of constructor injection easily readable
+
+		public interface IServiceLocator : IServiceProvider{
+			object GetInstance(Type serviceType);
+			object GetInstance(Type serviceType, string key);
+			...
+		}
+
+		// Usage
+		var taskService = ServiceLocator.Current.GetInstance<ITaskService>();
+
+	C. Composition Root
+		- location in an application where DI should happen
+		- where classes are constructed when using Poor Man's DI or interface mapping container
+		- as close to entry point of the application as possible
+
+		MVC example: (Global.asax)
+		public class MvcApplication : HttpApplication{
+			AreaRegistration.RegisterAllAreas();
+			...
+			Container container = new UnityContainer();
+			Container.RegisterType<ISettings, Settings>(); // Mapping
+
+		}
+
+	D. Convention over Confituration
+		- instead of using Container.RegisterType or XML use convention
+		- weakly typed
+
+		Container.RegisterTypes(
+			AllClasses.FromAssembliesInBasePath(), // bin folder
+			WithMappings.FromMachingInterface(), // ITaskService => TaskService (name mapping)
+			WithName.Default()
+		);

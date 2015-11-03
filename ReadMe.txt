@@ -452,7 +452,7 @@ PART II - SOLID PRINCIPLES
 		}
 
 		ex2. Connection Factory
-		- replace manual object instantiation with delegation to ta class whose purpose is to create objects
+		- replace manual object instantiation with delegation to class whose purpose is to create objects
 
 		// Injected into TaskService so that you can retrieve connection without manually constructinig it
 		// keeping the service testable through mocking
@@ -491,8 +491,11 @@ PART II - SOLID PRINCIPLES
 
 		ex4. Factory Isolation Pattern
 		- only required when target interface does not implement IDisposable
+		- only applicable when the product of the factory may or may not implement IDisposable. So it effectively forces all implementations to provide a public Dispose() method
+			adding using{} block will dispose of IdbConnection object
 		- factory isolation pattern replaces the common Create() method which returns an instance of a class, instead providing With() method
 			which accepts lambda method that has the factory product as a parameter
+		- allows to manage the lifetime of a database connection
 		- advantage here is that the lifetime of the factory product is explicitly linked to the lambda method scope (lambda ends = instance of class ends as well)
 
 		public class IsolationConnectionFactory : IConnectionIsolationFactory {
@@ -539,7 +542,7 @@ PART II - SOLID PRINCIPLES
 
 		}
 
-	D. Convention over Confituration
+	D. Convention over Configuration
 		- instead of using Container.RegisterType or XML use convention
 		- weakly typed (if error or no match found only error thrown at run time, whereas strongly typed using class error during compilation)
 
@@ -548,3 +551,10 @@ PART II - SOLID PRINCIPLES
 			WithMappings.FromMachingInterface(), // ITaskService => TaskService (name mapping)
 			WithName.Default()
 		);
+
+
+6. Sprints
+	a. Factory Isolation Pattern
+	b. Refactoring AdoNetRepository to not use Factory isolation pattern
+	c. 
+	

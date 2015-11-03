@@ -556,5 +556,5 @@ PART II - SOLID PRINCIPLES
 6. Sprints
 	a. Factory Isolation Pattern
 	b. Refactoring AdoNetRepository to not use Factory isolation pattern
-	c. 
+	c. Moved mapper and Repo outside of controller and created service (reader/writer) that map contract classes (Room) to ViewModels controller uses
 	

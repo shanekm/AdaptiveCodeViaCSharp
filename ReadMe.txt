@@ -565,3 +565,25 @@ PART II - SOLID PRINCIPLES
 	e. Using Service Locator pattern (Anti-Pattern) for ContentFilterAttribute (blocked words)
 		- Class that returns a static, hardcoded list and provide a more data-driven implementaion => Service Locator
 	f. ContentFilterAttribute for validating view model MessageViewModel
+
+	Solution Structure:
+		1. Database
+			Sermo.Data.AdoNet
+				- Concrete implementations of Repository (RoomRepository)
+			Sermo.Data.Contracts
+				- Interfaces (IRoomRepository)
+				- RoomRecord 
+				- any db classes
+		2. Infrastructure
+			- Service class and Mapper - Implements IReader/Writer (IoC) that DI will pass into Controller
+				Since it's passed into IReader/IWriter it has protection for reading only/writing only depending on functionality
+			- acts as translator between UI ViewModels and Db classes (RoomViewModel <=> Room)
+			- Repository and Mapper are injected into Service
+		3. UI
+			Sermo.UI.Markdown
+				- Decorator for reading (IReadRepo) room. Used for checking HTML markdown, then passing down original implementation
+			Sermo.UI.Contracts
+				- FilterAttributes - Content filter attribute to decorate RoomViewModel for bad words
+				- IRoomViewModelReader
+				- IRoomViewModelWriter
+				- ViewModels (ie. RoomViewModel) that Controller uses

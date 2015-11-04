@@ -557,6 +557,10 @@ PART II - SOLID PRINCIPLES
 	a. Factory Isolation Pattern
 	b. Refactoring AdoNetRepository to not use Factory isolation pattern
 	c. Moved mapper and Repo outside of controller and created service (reader/writer) that map contract classes (Room) to ViewModels controller uses
+		- created reader/writer and concrete implementation
+		- Created RepositoryRoomViewModelService service that implements reader and writer
+        - IoC will pass in Concrete implementaion RepositoryRoomViewModelService (read / write permissions)
+
 	d. Adding 'Decorator' for HTML markdown for IReader
 	e. Using Service Locator pattern (Anti-Pattern) for ContentFilterAttribute (blocked words)
 		- Class that returns a static, hardcoded list and provide a more data-driven implementaion => Service Locator

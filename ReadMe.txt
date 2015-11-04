@@ -499,7 +499,7 @@ PART II - SOLID PRINCIPLES
 		- advantage here is that the lifetime of the factory product is explicitly linked to the lambda method scope (lambda ends = instance of class ends as well)
 
 		public class IsolationConnectionFactory : IConnectionIsolationFactory {
-			public void With(Action<IDbConnection do){
+			public void With(Action<IDbConnection> do){
 				using (var connecion = CreateConnection()){
 					do(connection);
 				}

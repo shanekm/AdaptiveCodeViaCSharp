@@ -570,11 +570,10 @@ PART II - SOLID PRINCIPLES
 		1. Database
 			Sermo.Data.AdoNet
 				- Concrete implementations of Repository (RoomRepository)
-			Sermo.Data.Contracts
+			Sermo.Data.Contracts - any db classes
 				- Interfaces (IRoomRepository)
 				- RoomRecord 
-				- any db classes
-		2. Infrastructure
+		2. Infrastructure - "Bridge" between Db Records/Models and UI objects
 			- Service class and Mapper - Implements IReader/Writer (IoC) that DI will pass into Controller
 				Since it's passed into IReader/IWriter it has protection for reading only/writing only depending on functionality
 			- acts as translator between UI ViewModels and Db classes (RoomViewModel <=> Room)
@@ -587,3 +586,58 @@ PART II - SOLID PRINCIPLES
 				- IRoomViewModelReader
 				- IRoomViewModelWriter
 				- ViewModels (ie. RoomViewModel) that Controller uses
+
+Summary:
+	UI => Business Logic => Data Access
+
+	1. Structure
+			UI
+				1. Web (Controllers(IReader, IWriter))
+				2. Contracts (IReader, IWriter, ViewModels, Filters)
+
+			Infrastructure - Glue, accesed by all
+				1. Mapper
+				2. Service(IRepo, IMapper)
+
+			Database
+				1. AdoNet - Concrete Repository 
+				2. Contracts - IRepostiroy, Room
+
+			Test
+				1. Unit Tests
+
+
+	IBuyStuff Structure
+		
+			Site
+				1. Web (Controller(Service))
+				2. Application (Services => Services(IOrderRepository, IOrderRequestService), ViewModels, Validation on ViewModels)
+
+			Domain Layer
+				1. Domain (Order/Order.cs, Customer/Customer.cs, Shared/Currency.cs, Shanred/GenderEnum.cs etc)
+					a. IRepositories (Repository/IOrderRepository)
+				2. Domain.Services
+					a. DTO (LowStockProduct => used by: Application Services)
+					b. Services (Abstract + Concrete)
+						i. IShipmentService, IOrderRequestService, OrderRequestService.cs
+
+			Infrastructure
+				1. Mappings
+				2. Repositories (OrderRepository : IOrderRepository) - concrete - Save to DB
+
+			Tests
+				1. Unit Tests
+				
+
+	2. Concepts:
+		Big Ball Of Mud
+		Legacy code
+		Code smell
+		Entourage Anti-pattern
+		Service locator pattern
+		Factory isolation pattern
+		Mixins
+		Impromptu
+		Cross Cutting Concerns - AOP
+		CQRM - Command query responsibility segregation
+		Object composition

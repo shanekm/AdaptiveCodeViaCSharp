@@ -610,20 +610,23 @@ Summary:
 	IBuyStuff Structure
 		
 			Site
-				1. Web (Controller(Service))
-				2. Application (Services => Services(IOrderRepository, IOrderRequestService), ViewModels, Validation on ViewModels)
+				1. Web (Controller(Service)) - calls Application Layer
+				2. Application - calls Domain Layer
+					(Services => Services(IOrderRepository, IOrderRequestService), ViewModels, Validation on ViewModels)
+					IOrderControllerSerivce, OrderControllerService, LoginControllerService
 
-			Domain Layer
-				1. Domain (Order/Order.cs, Customer/Customer.cs, Shared/Currency.cs, Shanred/GenderEnum.cs etc)
+			Domain Layer - calls Infrastructure/Persistance Layer
+				1. Domain 
 					a. IRepositories (Repository/IOrderRepository)
+					b. Order/Order.cs, Order/OrderItem.cs, Customer/Customer.cs, Shared/GenderEnum.cs
 				2. Domain.Services
 					a. DTO (LowStockProduct => used by: Application Services)
 					b. Services (Abstract + Concrete)
 						i. IShipmentService, IOrderRequestService, OrderRequestService.cs
 
-			Infrastructure
+			Infrastructure Layer - DB save/persistance
 				1. Mappings
-				2. Repositories (OrderRepository : IOrderRepository) - concrete - Save to DB
+				2. Repositories (OrderRepository : IOrderRepository) - concrete implementations
 
 			Tests
 				1. Unit Tests

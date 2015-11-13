@@ -595,7 +595,7 @@ Summary:
 				1. Web (Controllers(IReader, IWriter))
 				2. Contracts (IReader, IWriter, ViewModels, Filters)
 
-			Infrastructure - Glue, accesed by all
+			Infrastructure (Application Layer) - Glue, accesed by all
 				1. Mapper
 				2. Service(IRepo, IMapper)
 
@@ -615,14 +615,14 @@ Summary:
 					(Services => Services(IOrderRepository, IOrderRequestService), ViewModels, Validation on ViewModels)
 					IOrderControllerSerivce, OrderControllerService, LoginControllerService
 
-			Domain Layer - calls Infrastructure/Persistance Layer
+			Domain Layer - calls Persistance Layer
 				1. Domain 
-					a. IRepositories (Repository/IOrderRepository)
-					b. Order/Order.cs, Order/OrderItem.cs, Customer/Customer.cs, Shared/GenderEnum.cs
+					a. IRepositories (/Repository/IOrderRepository.cs)
+					b. /Order/Order.cs, /Order/OrderItem.cs, /Customer/Customer.cs, /Shared/GenderEnum.cs
 				2. Domain.Services
 					a. DTO (LowStockProduct => used by: Application Services)
 					b. Services (Abstract + Concrete)
-						i. IShipmentService, IOrderRequestService, OrderRequestService.cs
+						i. IShipmentService.cs, ShipmentService.cs, IOrderRequestService.cs, OrderRequestService.cs
 
 			Infrastructure Layer - DB save/persistance
 				1. Mappings

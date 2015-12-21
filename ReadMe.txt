@@ -155,18 +155,33 @@ Board - Everyone is there to see it. May be able to make suggestions, ask questi
 
 8. Refactoring
 	- process of incrementally improving the design of existing code
-	AbstractBase class AccountService 
-		a. SilverAccount
-		b. GoldAccount
-		c. PlatinumAccoutn - each having CalculateRewardPoints() method
 
-	// Refactoring - implemented by Silver, Gold, Platinum, Standard accounts have no reward points
-	// Interface can be implemented by classes that have RewardPoints
-	interface IRewardCard
-	{
-		int RewardPoints { get; }
-	}
-	void CalculateRewardPoints(decimal amount, decimal accountBalance); 
+	- Initially - switch/case based on account type CalculateRewardPoints() 
+		ERROR - what if new account type is added, CalculateRewardPoints() method has be modified each time.
+		CORRECT - create AbstractBase class and inherit from it, implementing CalculateRewardPoints() in each subclass
+
+	A. AbstractBase class 
+		a. SilverAccount : AbstractBase
+		b. GoldAccount : AbstractBase
+		c. PlatinumAccoutn : AbstractBase - each having CalculateRewardPoints() method calculation in its won
+			- whenever new account  needs
+
+	B. AccountService needs to create correct account based on type (create Factory)
+		CORRECT - using IAccountFactory
+	
+		public interface IAccountFactory{
+			AccountBase CreateAccount(AccountType type); // return implementation using switch statement
+		}
+
+	C. Refactoring - implemented by Silver, Gold, Platinum, Standard accounts have no reward points
+		CORRECT - take out reward point from base and create new interface to use with account that use it
+		
+		// Interface can be implemented by classes that have RewardPoints
+		interface IRewardCard
+		{
+			int RewardPoints { get; }
+		}
+		void CalculateRewardPoints(decimal amount, decimal accountBalance); 
 
 
 PART II - SOLID PRINCIPLES
@@ -179,7 +194,37 @@ PART II - SOLID PRINCIPLES
 	- refactor for Adoptability and NOT for readability
 
 	TradeProcessor() class
-		- reads stream, parsing, validating, logging - all in one class
+		- ERROR - reads stream, parsing into IEnumerable<Record>, validating, logging - all in one class
+
+		- CORRECT: ProcessService.cs
+			public class ProcessTrades(){
+				a. string lines = ReadTradeData(stream);					// read - returns simple string
+				b. IEnumerable<Record> trades = ParseTradeLines(lines);	// parse - parses string into class(s) MAPPING is used
+					=> calls another class (Mapper.cs) Map(string line) method that maps from string to Record.cs
+					=> Record.cs returned from Mapper Map(string line) // delegates to another method to limit complexity
+				c. StoreTrades(trades);									// store - record to DB/file etc
+			}
+
+
+		- CORRECT - Stairway pattern - interfaces that TradeProcessor requires live in different assemblies
+			- this ensures that neither the client, nor the implementation assemblies reference each other
+
+			TradeProcessor(ITradeDataProvider, ITradeParser, ITradeStorage){
+				public void ProcessTrades(){
+					string lines = tradeDataProvider.ReadTradeData(stream);
+					IEnumerable<Record> trades = tradeParser.ParseTradeLines(lines);
+						=> uses ITradeMapper, ITradeValidator (see below)
+					tradeStorageStoreTrades(trades);	
+				}
+			}
+
+			SimpleTradeValidator : ITradeValidator
+			{
+				SimpleTradeValidator(ILogger) // for logging
+			}
+
+			A. TradeDataProvider - if new implementation was used using ie. Dapper, 
+				- "Serivce.Dapper" projest with DapperTradeDataProvider implementation
 
 		After Refactoring:
 			a. Stream can be easily replaced by other service (ie. web service) => new ITradeDataProvider (feeds service)

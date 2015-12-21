@@ -1,0 +1,4 @@
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.UI.Contracts\bin\Debug\Sermo.UI.Contracts.dll
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.UI.Contracts\bin\Debug\Sermo.UI.Contracts.pdb
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.UI.Contracts\obj\Debug\Sermo.UI.Contracts.dll
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.UI.Contracts\obj\Debug\Sermo.UI.Contracts.pdb

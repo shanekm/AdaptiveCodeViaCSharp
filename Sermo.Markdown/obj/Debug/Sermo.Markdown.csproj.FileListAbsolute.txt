@@ -1,0 +1,9 @@
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\bin\Debug\Sermo.Markdown.dll
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\bin\Debug\Sermo.Markdown.pdb
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\bin\Debug\MarkdownDeep.dll
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\bin\Debug\Sermo.UI.Contracts.dll
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\bin\Debug\Sermo.UI.Contracts.pdb
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\bin\Debug\MarkdownDeep.pdb
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\obj\Debug\Sermo.Markdown.csprojResolveAssemblyReference.cache
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\obj\Debug\Sermo.Markdown.dll
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Sermo.Markdown\obj\Debug\Sermo.Markdown.pdb

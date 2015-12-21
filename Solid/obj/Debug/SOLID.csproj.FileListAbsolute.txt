@@ -1,0 +1,8 @@
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Solid\bin\Debug\Solid.exe.config
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Solid\bin\Debug\Solid.exe
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Solid\bin\Debug\Solid.pdb
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Solid\obj\Debug\Solid.exe
+C:\Users\Shane.Kmiecik\Documents\Visual Studio 2013\Projects\AdaptiveCodeViaCSharp\Solid\obj\Debug\Solid.pdb
+D:\Dot.Net\AdaptiveCodeViaCSharp\Solid\bin\Debug\Solid.exe.config
+D:\Dot.Net\AdaptiveCodeViaCSharp\Solid\obj\Debug\Solid.exe
+D:\Dot.Net\AdaptiveCodeViaCSharp\Solid\obj\Debug\Solid.pdb
